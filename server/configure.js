@@ -8,11 +8,19 @@ var morgan = require("morgan");
 var methodOverride = require("method-override");
 var errorHandler = require("errorhandler");
 var moment = require("moment");
+var multer = require("multer");
 
-module.exports = function(app) {
+const upload = multer({ dest: path.join(__dirname, 'public/upload/temp')});
+
+module.exports = function (app) {
     app.use(morgan("dev"));
     app.use(bodyParser.urlencoded({"extended": true}));
     app.use(bodyParser.json());
+    // app.use(bodyParser({
+    //     uploadDir: path.join(__dirname, 'public/upload/temp')
+    // }));
+    app.use(upload.single("file"));
+
     app.use(methodOverride());
     app.use(cookieParser("some-secret-value-here"));
     routes(app); //moving the routes to routes folder.
@@ -30,7 +38,7 @@ module.exports = function(app) {
 
         // global helpers
         helpers: {
-            timeago: function(timestamp) {
+            timeago: function (timestamp) {
                 return moment(timestamp).startOf("minute").fromNow();
             }
         }
