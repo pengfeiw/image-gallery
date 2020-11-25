@@ -1,6 +1,12 @@
 var  express = require("express");
-config = require("./server/configure"),
-app = express();
+var mongoose = require("mongoose");
+var config = require("./server/configure"),
+var app = express();
+
+mongoose.connect("mongodb://localhost/imgPloadr");
+mongoose.connection.on("open", function() {
+    console.log("Mongoose connected.");
+});
 
 app.set("port", process.env.PORT || 3300);
 app.set("views", __dirname + "/views");
