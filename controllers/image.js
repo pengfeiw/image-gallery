@@ -69,7 +69,8 @@ module.exports = {
         saveImage();
     },
     like: function (req, res) {
-        res.send('The image:like POST controller');
+        // res.send('The image:like POST controller');
+        res.json({likes: 1})
     },
     comment: function (req, res) {
         res.send('The image:comment POST controller');
