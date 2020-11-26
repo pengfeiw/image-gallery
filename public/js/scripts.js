@@ -3,7 +3,7 @@ $(function () {
     $("#btn-comment").on("click", function(event) {
         event.preventDefault();
 
-        $("#post-comment").show();
+        $("#post-comment").toggle();
     })
 
     $("#btn-like").on("click", function(event){
