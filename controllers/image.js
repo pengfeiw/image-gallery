@@ -9,14 +9,13 @@ module.exports = {
             image: {},
             comments: []
         }
-
         // 查找特定图片
         Models.Image.findOne({filename: {$regex: req.params.image_id}},
             function (err, image) {
                 if (err) {throw err;}
                 if (image) {
                     image.views = image.views + 1;
-                    viewModel.image = image;
+                    viewModel.image = image.toObject({getters: true});
                     image.save();
 
                     // 查找与该图片相关的评论
@@ -80,8 +79,18 @@ module.exports = {
         saveImage();
     },
     like: function (req, res) {
-        // res.send('The image:like POST controller');
-        res.json({likes: 1})
+        Models.Image.findOne({filename: {$regex: req.params.image_id}}, function(err, image) {
+            if (!err && image) {
+                image.likes = image.likes + 1;
+                image.save(function(err) {
+                    if (err) {
+                        res.json(err);
+                    } else {
+                        res.json({likes: image.likes});
+                    }
+                });
+            }
+        });
     },
     comment: function (req, res) {
         res.send('The image:comment POST controller');
