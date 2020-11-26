@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var config = require("./server/configure");
 var app = express();
 
-mongoose.connect("mongodb://localhost/imgPloadr");
+mongoose.connect("mongodb://localhost/imgPloadr", { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on("open", function() {
     console.log("Mongoose connected.");
 });
