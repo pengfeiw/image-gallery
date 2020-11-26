@@ -1,6 +1,6 @@
 var  express = require("express");
 var mongoose = require("mongoose");
-var config = require("./server/configure"),
+var config = require("./server/configure");
 var app = express();
 
 mongoose.connect("mongodb://localhost/imgPloadr");
